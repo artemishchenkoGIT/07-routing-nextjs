@@ -1,10 +1,21 @@
 import { Note, CreateNote, NoteTag } from '@/types/note';
-import $host from './index';
+import axios from 'axios';
+
+const API_KEY = process.env.NEXT_PUBLIC_NOTEHUB_TOKEN;
+
+const BASE_URL = process.env.NEXT_PUBLIC_NOTEHUB_BASE_URL;
 
 interface NoteSearchResponse {
   notes: Note[];
   totalPages: number;
 }
+
+const $host = axios.create({
+  baseURL: BASE_URL,
+  headers: {
+    Authorization: `Bearer ${API_KEY}`,
+  },
+});
 
 export async function fetchNotes(
   search?: string,
